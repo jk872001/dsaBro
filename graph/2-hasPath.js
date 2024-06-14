@@ -21,8 +21,8 @@ function iterativeDFT(graph, start, dest, visited = new Set()) {
 
   while (stack.length > 0) {
     let node = stack.pop();
-    if(node === dest){
-        return true
+    if (node === dest) {
+      return true;
     }
     if (!visited.has(node)) {
       visited.add(node);
@@ -33,45 +33,44 @@ function iterativeDFT(graph, start, dest, visited = new Set()) {
       }
     }
   }
-  return false
+  return false;
 }
 
 // console.log(iterativeDFT(graph,1,3))
 // console.log(iterativeDFT(graph,1,4))
 
 // BFT
-function hasPathBFT(graph,start,dest,visited = new Set()){
-    let queue = [ start ]
-    visited.add(start)
-    while(queue.length > 0){
-        let node = queue.shift()
-        if(node === dest) return true
-        for (const neighbour of graph[node]) {
-            if(!visited.has(neighbour)){
-                visited.add(neighbour)
-                queue.push(neighbour)
-            }
-        }
+function hasPathBFT(graph, start, dest, visited = new Set()) {
+  let queue = [start];
+  visited.add(start);
+  while (queue.length > 0) {
+    let node = queue.shift();
+    if (node === dest) return true;
+    for (const neighbour of graph[node]) {
+      if (!visited.has(neighbour)) {
+        visited.add(neighbour);
+        queue.push(neighbour);
+      }
     }
-    return false;
+  }
+  return false;
 }
 // console.log(hasPathBFT(graph,1,3))
 // console.log(hasPathBFT(graph,1,4))
 
 // recursive DFT
-function recursiveHasPathDFT(graph,start,dest,visited=new Set()){
-    if(start === dest) return true
-    if(visited.has(start)){
-        return false
+function recursiveHasPathDFT(graph, start, dest, visited = new Set()) {
+  if (start === dest) return true;
+  if (visited.has(start)) {
+    return false;
+  }
+  visited.add(start);
+  for (const neighbour of graph[start]) {
+    if (recursiveHasPathDFT(graph, neighbour, dest) === true) {
+      return true;
     }
-    visited.add(start)
-    for (const neighbour of graph[start]) {
-        if(recursiveHasPathDFT(graph,neighbour,dest) === true){
-            return true
-        }
-    }
-    return false
+  }
+  return false;
 }
 console.log(recursiveHasPathDFT(graph,1,3))
 console.log(recursiveHasPathDFT(graph,1,4))
-

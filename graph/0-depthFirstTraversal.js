@@ -8,13 +8,10 @@ const graph = {
 };
 
 //   itterative approach
-function iterativeDFT(graph, start) {
+function iterativeDFT(graph, start, visited = new Set()) {
   let stack = [start];
-  let visited = new Set();
-
   while (stack.length > 0) {
     let node = stack.pop();
-    console.log("iterative",visited)
     if (!visited.has(node)) {
       visited.add(node);
       for (const neighbour of graph[node]) {
@@ -27,19 +24,19 @@ function iterativeDFT(graph, start) {
   return visited;
 }
 
-console.log(iterativeDFT(graph,"a"))
+console.log(iterativeDFT(graph, "a"));
 
 // recursive approach
 
-function recursiveDFT(graph,start,visited = new Set()){
-    if(!visited.has(start)){
-        visited.add(start)
-        for (const neighbour of graph[start]) {
-            recursiveDFT(graph,neighbour,visited)
-        }
+function recursiveDFT(graph, start, visited = new Set()) {
+  if (!visited.has(start)) {
+    visited.add(start);
+    for (const neighbour of graph[start]) {
+      recursiveDFT(graph, neighbour, visited);
     }
-    console.log("recursion",visited)
-    return visited
+  }
+
+  return visited;
 }
 
-console.log(recursiveDFT(graph,"a"))
+console.log(recursiveDFT(graph, "a"));

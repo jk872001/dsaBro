@@ -31,19 +31,18 @@ const edges = [
   ];
 
 function createGraph(edges)  {
-    let graph = {}
-    for (let i = 0; i < edges.length; i++) {
-       let [ x,y ] = edges[i]
-       if(!(x in graph)){
-         graph[x] = []
-       }
-       if(!(y in graph)){
-         graph[y] = []
-       }
-       graph[x].push(y)
-       graph[y].push(x)
-
-    }
-    return graph;
+  let graph ={}
+  for (let i = 0; i < edges.length; i++) {
+     let [x,y] = edges[i]
+     if(!(x in graph)){
+      graph[x] = []
+     }
+     if(!(y in graph)){
+      graph[y] = []
+     }
+     graph[x].push(y)
+     graph[y].push(x)
+  }
+  return graph
 }
 console.log(createGraph(edges))
