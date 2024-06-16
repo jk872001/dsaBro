@@ -88,6 +88,19 @@ Linkedlist.prototype.traverse = function(){
    return result
 }
 
+Linkedlist.prototype.reverse= function(){
+  let curr = this.head
+  let prev = null
+  let next = null
+  while(curr){
+    next = curr.next
+    curr.next = prev
+    prev = curr
+    curr = next
+  }
+  this.head = prev
+}
+
 
 
 let link = new Linkedlist();
@@ -100,8 +113,8 @@ link.deleteLastNode()
 link.insertAtEnd(4);
 link.deleteByKey(1);
 link.insertAtEnd(8);
-
+// link.reverse()
 console.log(JSON.stringify(link));
-console.log(link.search(4))
-console.log(link.search(5))
-console.log(link.traverse())
+// console.log(link.search(4))
+// console.log(link.search(5))
+// console.log(link.traverse())
