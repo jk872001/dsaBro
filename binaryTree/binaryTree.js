@@ -1,8 +1,8 @@
 class BSTNode {
-  constructor(key) {
+  constructor(key, left = null, right = null) {
     this.key = key;
-    this.left = null;
-    this.right = null;
+    this.left = left;
+    this.right = right;
   }
 }
 
@@ -13,94 +13,148 @@ class BinarySearchTree {
 
   insert(key) {
     let newNode = new BSTNode(key);
-    if (this.root === null) {
+    if (!this.root) {
       this.root = newNode;
-    } else {
-      this.insertNode(this.root, newNode);
+      return;
     }
+    this.insertNode(this.root, newNode);
   }
 
   insertNode(node, newNode) {
     if (newNode.key < node.key) {
-      if (node.left === null) {
+      if (!node.left) {
         node.left = newNode;
-      } else {
+      }else{
         this.insertNode(node.left, newNode);
       }
-    } else {
-      if (node.right === null) {
+      
+    } else if (newNode.key > node.key) {
+      if (!node.right) {
         node.right = newNode;
-      } else {
+      }else{
         this.insertNode(node.right, newNode);
       }
+       }
+  }
+
+  delete(key) {
+    this.root = this.deleteNode(this.root, key);
+  }
+
+  deleteNode(node, key) {
+    if (!node) {
+      return null;
+    }
+    if (key < node.key) {
+      node.left = this.deleteNode(node.left, key);
+    } else if (key > node.key) {
+      node.right = this.deleteNode(node.right, key);
+    } else {
+      if (node.left === null && node.right === null) {
+        return null;
+      } else if (node.left === null) {
+        return node.right;
+      } else if (node.right === null) {
+        return node.left;
+      } else {
+        let tempNode = this.findMinNode(node.right);
+        node.key = tempNode.key;
+        node.right = this.deleteNode(node.right, tempNode.key);
+      }
+    }
+    return node;
+  }
+
+  findMinNode(node) {
+    while (node.left !== null) {
+      node = node.left;
+    }
+    return node;
+  }
+
+  inOrderTraversal(){
+    let result = []
+    this.inorder(this.root,result)
+    return result
+  }
+
+  inorder(node,result){
+    if(node !== null){
+      this.inorder(node.left,result)
+      result.push(node.key)
+      this.inorder(node.right,result)
     }
   }
 
-  delete(key){
-    this.root=this.deleteNode(this.root,key)
+  preOrderTraversal(){
+    let result = []
+    this.preOrder(this.root,result)
+    return result
   }
 
-  deleteNode(node,key){
-    if(node === null){
-        return null
+  preOrder(node,result){
+    if(node !== null){
+      result.push(node.key)
+      this.preOrder(node.left,result)
+      this.preOrder(node.right,result)
     }
-    if(key < node.key){
-        node.left = this.deleteNode(node.left,key)
-    }else if(key > node.key){
-        node.right = this.deleteNode(node.right,key)
-    }else{
-        if(node.left === null && node.right === null){
-            return null
-        }else if(node.left === null){
-            return node.right
-        }else if(node.right === null){
-            return node.left
-        }else{
-            let tempNode = this.findMinNode(node.right)
-            node.key = tempNode.key
-            node.right = this.deleteNode(node.right,tempNode.key)
-        }
-    }
-    return node
   }
 
-  findMinNode(node){
-    while(node.left !== null){
-        node = node.left
-    }
-    return node
+  postOrderTraversal(){
+    let result = []
+    this.postOrder(this.root,result)
+    return result
   }
-   depthFirstTraversal = (root) => {
-    if (root === null) {
-      return // return a message or empty
+
+  postOrder(node,result){
+    if(node !== null){
+      this.postOrder(node.left,result)
+      this.postOrder(node.right,result)
+      result.push(node.key)
     }
-    const values = []
-    const stack = [ root ]
-  
+  }
+
+  dfs(){
+    if (!this.root) return [];
+    let stack = [this.root]
+    let result = []
+
     while(stack.length > 0){
-      const node = stack.pop()
-      values.push(node.key)
-  
-      if (node.right !== null) {
-        stack.push(node.right)
-      }
-      if (node.left !== null) {
-        stack.push(node.left)
-      }
+       let node = stack.pop()
+       result.push(node.key)
+
+       if(node.right !== null) stack.push(node.right)
+       if(node.left !== null) stack.push(node.left)
+      
     }
-    return values;
+    return result
   }
+
+  bfs(){
+    if (!this.root) return [];
+    let queue = [this.root]
+    let result = []
+
+    while(queue.length > 0){
+       let node = queue.shift()
+       result.push(node.key)
+
+       if(node.left !== null) queue.push(node.left)
+       if(node.right !== null) queue.push(node.right)
+    }
+    return result
+  }
+  
 }
 
-let binary = new BinarySearchTree()
-binary.insert(5)
-binary.insert(3)
-binary.insert(8)
-binary.insert(2)
-binary.insert(4)
-binary.insert(7)
-binary.insert(10)
-binary.delete(5)
-binary.delete(5)
-
-console.log(JSON.stringify(binary))
+const binary = new BinarySearchTree();
+binary.insert(5);
+binary.insert(3);
+binary.insert(7);
+// binary.delete(5)
+// console.log(binary);
+// console.log(binary.inOrderTraversal())
+// console.log(binary.preOrderTraversal())
+// console.log(binary.postOrderTraversal())
+console.log(binary.dfs())
+console.log(binary.bfs())

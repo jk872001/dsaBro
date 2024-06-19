@@ -32,3 +32,10 @@ function countIsland(graph) {
 } 
 
 console.log(countIsland(graph));
+
+
+// a
+// / \
+// b---c
+// \ / \
+//  d   e---f
