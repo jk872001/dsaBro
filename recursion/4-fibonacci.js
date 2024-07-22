@@ -10,7 +10,7 @@ function fibonacci(n) {
   return n1;
 }
 // console.log(fibonacci(6))
-
+  
 // 2nd recursive approach
 function recursiveFibonacci(n) {
   if (n <= 1) {

@@ -24,5 +24,10 @@ function selectionSort(arr) {
   }
   
   // Example usage
-  console.log(selectionSort([4, 2, 1, 3])); // Output: [1, 2, 3, 4]
+//   console.log(selectionSort([4, 2, 1, 3])); // Output: [1, 2, 3, 4]
+let str = "2efds"
+    if(!isNaN(str[0])){
+        console.log("yes")
+    }
+  
   
